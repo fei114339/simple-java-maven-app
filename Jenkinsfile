@@ -1,4 +1,3 @@
-
 pipeline {
     agent {
         docker {
@@ -13,3 +12,5 @@ pipeline {
                 sh 'mvn -B -DskipTests clean package'
             }
         }
+    }
+}
