@@ -1,3 +1,4 @@
+
 pipeline {
     agent {
         docker {
@@ -10,6 +11,21 @@ pipeline {
             steps {
                 git 'https://github.com/fei114339/simple-java-maven-app'
                 sh 'mvn -B -DskipTests clean package'
+            }
+        }
+         stage('Test') {
+            steps {
+                sh 'mvn test'
+            }
+            post {
+                always {
+                    junit 'target/surefire-reports/*.xml'
+                }
+            }
+        }
+        stage('Deliver') { 
+            steps {
+                sh './jenkins/scripts/deliver.sh' 
             }
         }
     }
